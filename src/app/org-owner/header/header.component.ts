@@ -10,18 +10,15 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  user: Observable<User>;
+  user: User;
 
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
     this.auth.getUser()
-      .subscribe(
-        res => {
-          console.log(res);
-          return this.user = res['user'];
-        }
-      );
+    .subscribe(
+      res => this.user = res['user']
+    );
   }
 
   logout() {
