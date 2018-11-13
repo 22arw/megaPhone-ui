@@ -1,13 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Base } from 'src/app/core/interfaces/base';
 import { BaseService } from 'src/app/core/services/base.service';
-import { ClrDatagridStringFilterInterface, ClrWizard } from '@clr/angular';
+import { ClrDatagridStringFilterInterface, ClrWizard , ClrDatagridComparatorInterface} from '@clr/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
   accepts(bases: Base, search: string): boolean {
     return '' + bases.baseName === search
       || bases.baseName.toLowerCase().indexOf(search) >= 0;
+  }
+}
+
+class BaseComparator implements ClrDatagridComparatorInterface<Base> {
+  compare(a: Base, b: Base) {
+      return a.createdAt - b.createdAt;
   }
 }
 
@@ -41,6 +47,7 @@ export class DashboardComponent implements OnInit {
   base: Base;
 
   public baseFilter = new BaseFilter();
+  public baseComparator = new BaseComparator();
 
   constructor(public baseServ: BaseService) { }
 
@@ -67,6 +74,7 @@ export class DashboardComponent implements OnInit {
         res => {
           console.log(res);
           if (res['success'] === true) {
+            this.bases.push(res['base']);
             this.baseManagerForm.controls['baseId'].patchValue(res['base']['id']);
             return this.baseisCreated = !this.baseisCreated;
           }
