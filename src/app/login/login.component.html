@@ -1,0 +1,31 @@
+<div class="content-container">
+  <div class="content-area">
+    <div class="clr-row clr-align-items-center">
+      <div class="clr-col" style="text-align: right;">
+        <img src="../../assets/images/MegaPhoneLogo.svg" alt="" style="width:18rem;">
+      </div>
+      <div class="clr-col">
+        <form clrForm [formGroup]="loginForm" (ngSubmit)="login()">
+
+          <clr-input-container>
+            <label>Email</label>
+            <input clrInput type="text" formControlName="email" />
+            <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+            <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+          </clr-input-container>
+
+          <clr-password-container>
+              <input clrPassword placeholder="Password" formControlName="password" />
+              <clr-control-helper>Must be at least 4 characters</clr-control-helper>
+              <clr-control-error>Whoops! Check the length of your password.</clr-control-error>
+            </clr-password-container>
+
+          <div style="margin-top:1rem;">
+            <button class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
