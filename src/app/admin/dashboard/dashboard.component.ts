@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Base } from 'src/app/core/interfaces/base';
 import { BaseService } from 'src/app/core/services/base.service';
 import { ClrDatagridStringFilterInterface } from '@clr/angular';
-import { Observable } from 'rxjs';
 
 class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
   accepts(bases: Base, search: string): boolean {
@@ -10,7 +9,6 @@ class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
       || bases.baseName.toLowerCase().indexOf(search) >= 0;
   }
 }
-
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +18,7 @@ class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
 export class DashboardComponent implements OnInit {
 
   bases: Base[];
+  selected: Base;
 
   public baseFilter = new BaseFilter();
 
@@ -30,6 +29,15 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         res => this.bases = res['bases']
       );
+  }
+
+  onEdit(base) {
+    console.log(base);
+    this.selected = base;
+  }
+
+  onView(base) {
+    console.log(base);
   }
 
 }
