@@ -19,9 +19,9 @@ class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
 })
 export class DashboardComponent implements OnInit {
 
-  bases: Observable<Base[]>;
+  bases: Base[];
 
-  private baseFilter = new BaseFilter();
+  public baseFilter = new BaseFilter();
 
   constructor(public baseServ: BaseService) { }
 
