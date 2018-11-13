@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('baseWizard') wizardLarge: ClrWizard;
 
   baseWizardOpen = false;
+  baseisCreated = false;
+  managerisCreated = false;
 
   bases: Base[];
   base: Base;
@@ -61,14 +63,28 @@ export class DashboardComponent implements OnInit {
   createBase() {
     console.log(this.baseCreateForm.value);
     this.baseServ.createBase(this.baseCreateForm.value)
-    .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    );
+      .subscribe(
+        res => {
+          console.log(res);
+          if (res['success'] === true) {
+            this.baseManagerForm.controls['baseId'].patchValue(res['base']['id']);
+            return this.baseisCreated = !this.baseisCreated;
+          }
+        }
+      );
   }
 
   createBaseManager() {
     console.log(this.baseCreateForm.value);
+    this.baseServ.createBaseManager(this.baseManagerForm.value)
+    .subscribe(
+      res => {
+        console.log(res);
+        if (res['success'] === true) {
+          return this.managerisCreated = !this.managerisCreated;
+        }
+      }
+    );
   }
 
 

@@ -46,7 +46,7 @@
     <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
     <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
 
-    <clr-wizard-page [clrWizardPageNextDisabled]="!baseCreateForm.valid">
+    <clr-wizard-page [clrWizardPageNextDisabled]="(!baseisCreated)">
         <ng-template clrPageTitle>Base Credentials</ng-template>
         <form clrForm [formGroup]="baseCreateForm" clrLayout="horizontal" (ngSubmit)="createBase()">
 
@@ -91,7 +91,7 @@
         </form>
     </clr-wizard-page>
 
-    <clr-wizard-page>
+    <clr-wizard-page [clrWizardPageNextDisabled]="(!managerisCreated)">
         <ng-template clrPageTitle>Base Manager</ng-template>
         <form clrForm [formGroup]="baseManagerForm" clrLayout="horizontal" (ngSubmit)="createBaseManager()">
 
@@ -118,6 +118,9 @@
 
     <clr-wizard-page>
         <ng-template clrPageTitle>Review</ng-template>
-        ...
+        <h4>Awesome, The Base Creation Wizard is completed!</h4>
+        <p>Here's what is in the books now:</p>
+        {{ baseCreateForm.status}}
+        {{ baseManagerForm.status }}
     </clr-wizard-page>
 </clr-wizard>
