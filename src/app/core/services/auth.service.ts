@@ -30,16 +30,6 @@ export class AuthService {
     );
   }
 
-  // getUser() {
-  //   const token = localStorage.getItem('access_token');
-  //   return this.http.get(
-  //     'https://megaphone-test.herokuapp.com/api/user',
-  //     {
-  //       headers: new HttpHeaders().append('x-access-token', token)
-  //     }
-  //   );
-  // }
-
   getUser(): Observable<User> {
     const token = localStorage.getItem('access_token');
     return this.http.get<User>(

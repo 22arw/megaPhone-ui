@@ -1,8 +1,16 @@
-<clr-tree-node>
-    <clr-icon shape="building"></clr-icon>
-    Office Locations
-    <ng-template clrIfExpanded>
-        <!-- <lazy-loaded-locations></lazy-loaded-locations> -->
-        <app-tree></app-tree>
-    </ng-template>
-</clr-tree-node>
+<clr-datagrid>
+    <clr-dg-column>Installation ID</clr-dg-column>
+    <clr-dg-column>
+        Installation Name
+        <clr-dg-string-filter [clrDgStringFilter]="baseFilter"></clr-dg-string-filter>
+    </clr-dg-column>
+    <clr-dg-column>Creation Date</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let base of bases">
+        <clr-dg-cell>{{base.id}}</clr-dg-cell>
+        <clr-dg-cell>{{base.baseName}}</clr-dg-cell>
+        <clr-dg-cell>{{base.createdAt | date}}</clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{bases?.length}} Bases</clr-dg-footer>
+</clr-datagrid>
