@@ -2,21 +2,21 @@
 <nav class="subnav">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Dashboard</a>
+            <a routerLink="dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Management</a>
+            <a routerLink="manager-master" routerLinkActive="active" class="nav-link">Base Management</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Cloud</a>
+            <a routerLink="org-master" routerLinkActive="active" class="nav-link">Organization Management</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Tenants</a>
+            <a routerLink="message-service" routerLinkActive="active" class="nav-link">Message Service</a>
         </li>
     </ul>
 </nav>
 <div class="content-container">
-  <div class="content-area">
-    <router-outlet></router-outlet>
-  </div>
+    <div class="content-area">
+        <router-outlet></router-outlet>
+    </div>
 </div>
