@@ -5,10 +5,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TreeComponent } from './dashboard/tree/tree.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, HeaderComponent, DashboardComponent],
+  declarations: [AdminComponent, HeaderComponent, DashboardComponent, TreeComponent],
   imports: [
     CommonModule,
     ClarityModule,

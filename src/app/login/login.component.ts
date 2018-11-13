@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit {
         } else if (res['role'] === 4) {
           this.router.navigate(['base-manager']);
         } else if (res['role'] === 3) {
-          this.router.navigate(['organization-manager']);
+          this.router.navigate(['org-owner']);
+        } else if (res['role'] === 2) {
+          this.router.navigate(['org-manager']);
         }
       }
     );
