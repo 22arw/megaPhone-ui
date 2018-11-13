@@ -8,7 +8,15 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     children: [
-      {path: '', component: DashboardComponent}
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      }
     ]
   }
 ];

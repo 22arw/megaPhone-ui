@@ -5,6 +5,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     ClarityModule,
     ClrFormsNextModule,
+    ReactiveFormsModule,
     AdminRoutingModule
   ]
 })

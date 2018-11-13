@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Base } from 'src/app/core/interfaces/base';
 import { BaseService } from 'src/app/core/services/base.service';
-import { ClrDatagridStringFilterInterface } from '@clr/angular';
+import { ClrDatagridStringFilterInterface, ClrWizard } from '@clr/angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
   accepts(bases: Base, search: string): boolean {
@@ -17,8 +18,25 @@ class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
 })
 export class DashboardComponent implements OnInit {
 
+  baseCreateForm = new FormGroup({
+    baseName: new FormControl('', Validators.required),
+    basePhoneNumber: new FormControl('', Validators.required),
+    bandwidthUserId: new FormControl('', Validators.required),
+    bandwidthApiToken: new FormControl('', Validators.required),
+    bandwidthApiSecret: new FormControl('', Validators.required)
+  });
+
+  baseManagerForm = new FormGroup({
+    baseId: new FormControl('', Validators.required),
+    newBaseManagerEmail: new FormControl('', Validators.required),
+  });
+
+  @ViewChild('baseWizard') wizardLarge: ClrWizard;
+
+  baseWizardOpen = false;
+
   bases: Base[];
-  selected: Base;
+  base: Base;
 
   public baseFilter = new BaseFilter();
 
@@ -33,11 +51,25 @@ export class DashboardComponent implements OnInit {
 
   onEdit(base) {
     console.log(base);
-    this.selected = base;
+    this.base = base;
   }
 
-  onView(base) {
-    console.log(base);
+  onToggle() {
+    this.baseWizardOpen = !this.baseWizardOpen;
   }
+
+  createBase() {
+    console.log(this.baseCreateForm.value);
+    this.baseServ.createBase(this.baseCreateForm.value)
+    .subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
+  }
+
+  createBaseManager() {
+    console.log(this.baseCreateForm.value);
+  }
+
 
 }

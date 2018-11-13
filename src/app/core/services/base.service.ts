@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { Base } from '../interfaces/base';
 import { map } from 'rxjs/operators';
 
+// export interface BaseForm{
+
+// }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,4 +26,16 @@ export class BaseService {
       }
     );
   }
+
+  createBase(formData) {
+    const token = localStorage.getItem('access_token');
+    return this.http.post(
+      'https://megaphone-test.herokuapp.com/api/base/createBase',
+      formData,
+      {
+        headers: new HttpHeaders().append('x-access-token', token)
+      },
+    );
+  }
+
 }

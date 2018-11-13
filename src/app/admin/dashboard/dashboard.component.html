@@ -1,5 +1,7 @@
 <div class="clr-row">
     <div class="clr-col">
+        <h2>All Installations</h2>
+        <hr>
         <clr-datagrid>
             <clr-dg-column>Installation ID</clr-dg-column>
             <clr-dg-column>
@@ -13,7 +15,7 @@
             <clr-dg-row *clrDgItems="let base of bases" [clrDgItem]="base">
                 <clr-dg-action-overflow>
                     <button class="action-item" (click)="onEdit(base)">Edit</button>
-                    <button class="action-item" (click)="onView(base)">View</button>
+                    <!-- <button class="action-item" (click)="onView(base)">View</button> -->
                 </clr-dg-action-overflow>
                 <clr-dg-cell>{{base.id}}</clr-dg-cell>
                 <clr-dg-cell>{{base.baseName}}</clr-dg-cell>
@@ -23,17 +25,99 @@
             </clr-dg-row>
 
             <clr-dg-footer>
-                <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                <clr-dg-pagination #pagination [clrDgPageSize]="8">
                     {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
                     of {{pagination.totalItems}} Bases
                 </clr-dg-pagination>
             </clr-dg-footer>
         </clr-datagrid>
         <div style="margin-top:1rem;">
-            <button class="btn btn-primary">Create A New Base</button>
+            <button class="btn btn-primary" (click)="onToggle()">Create A New Base</button>
         </div>
     </div>
-    <div class="clr-col">
-        Selected base: <span *ngIf="selected">{{base.baseName}}</span>
-    </div>
 </div>
+
+
+<clr-wizard #baseWizard [(clrWizardOpen)]="baseWizardOpen" clrWizardSize="lg">
+    <clr-wizard-title>Base Creation Wizard</clr-wizard-title>
+
+    <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+    <clr-wizard-page [clrWizardPageNextDisabled]="!baseCreateForm.valid">
+        <ng-template clrPageTitle>Base Credentials</ng-template>
+        <form clrForm [formGroup]="baseCreateForm" clrLayout="horizontal" (ngSubmit)="createBase()">
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Base Name:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="baseName" />
+                <clr-control-helper>Enter the installation name</clr-control-helper>
+                <clr-control-error>Must be at least 4 characters</clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Phone Number:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="basePhoneNumber" />
+                <clr-control-helper>Enter the phone number chosen in Bandwidth</clr-control-helper>
+                <clr-control-error>Invalid</clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Bandwidth User Id:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="bandwidthUserId" />
+                <clr-control-helper>Bandwidth User ID created during setup</clr-control-helper>
+                <clr-control-error>Invalid</clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Bandwidth API Token:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="bandwidthApiToken" />
+                <clr-control-helper>Enter the token</clr-control-helper>
+                <clr-control-error>Invalid</clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Bandwidth API Secret:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="bandwidthApiSecret" />
+                <clr-control-helper>Enter the Secret</clr-control-helper>
+                <clr-control-error>Invalid</clr-control-error>
+            </clr-input-container>
+            <div style="margin-top:.8rem;">
+                <button type="submit" class="btn btn-success btn-sm" [disabled]="!baseCreateForm.valid">Create Base to Proceed</button>
+            </div>
+
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Base Manager</ng-template>
+        <form clrForm [formGroup]="baseManagerForm" clrLayout="horizontal" (ngSubmit)="createBaseManager()">
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Base ID:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="text" formControlName="baseId" />
+                <clr-control-helper>Enter the installation name</clr-control-helper>
+                <clr-control-error>Must be at least 4 characters</clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Base Manager Email:</label>
+                <input class="clr-col-xs-12 clr-col-md-8" clrInput type="email" formControlName="newBaseManagerEmail" />
+                <clr-control-helper>Enter the phone number chosen in Bandwidth</clr-control-helper>
+                <clr-control-error>Invalid</clr-control-error>
+            </clr-input-container>
+
+            <div style="margin-top:.8rem;">
+                <button type="submit" class="btn btn-success btn-sm" [disabled]="!baseManagerForm.valid">Create Manager to Proceed</button>
+            </div>
+        </form>
+
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Review</ng-template>
+        ...
+    </clr-wizard-page>
+</clr-wizard>
