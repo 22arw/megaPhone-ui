@@ -11,11 +11,11 @@ class BaseFilter implements ClrDatagridStringFilterInterface<Base> {
   }
 }
 
-class BaseComparator implements ClrDatagridComparatorInterface<Base> {
-  compare(a: Base, b: Base) {
-      return a.createdAt - b.createdAt;
-  }
-}
+// class BaseComparator implements ClrDatagridComparatorInterface<Base> {
+//   compare(a: Base, b: Base) {
+//       return a.createdAt - b.createdAt;
+//   }
+// }
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   base: Base;
 
   public baseFilter = new BaseFilter();
-  public baseComparator = new BaseComparator();
+  // public baseComparator = new BaseComparator();
 
   constructor(public baseServ: BaseService) { }
 
