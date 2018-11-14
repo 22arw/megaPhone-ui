@@ -1,3 +1,15 @@
-<p>
-  manager-master works!
-</p>
+<div class="clr-row">
+  <div class="clr-col-2">
+    <div *ngFor="let base of bases">
+      <clr-tree-node *ngFor="let org of orgs">
+        {{ base.baseName }}
+        <ng-template [clrIfExpanded]="false" *ngIf="org.baseId == base.id">
+          <clr-tree-node>
+              {{ org.orgName }}
+          </clr-tree-node>
+        </ng-template>
+      </clr-tree-node>
+    </div>
+  </div>
+  <div class="clr-col"></div>
+</div>

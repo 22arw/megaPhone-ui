@@ -1,3 +1,6 @@
+import { Organization } from './organization';
+import { BaseManager } from './base-manager';
+
 export interface Base {
     id: number;
     basePhoneNumber: string;
@@ -7,4 +10,6 @@ export interface Base {
     bandwidthApiSecret: string;
     createdAt?: Date;
     updatedAt?: Date;
+    orgs?: Organization;
+    managers?: BaseManager;
 }

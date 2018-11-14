@@ -22,6 +22,17 @@ export class BaseService {
     );
   }
 
+  getAllOrgsUnderBase(baseId) {
+    const token = localStorage.getItem('access_token');
+    return this.http.post(
+      'https://megaphone-test.herokuapp.com/api/base/getAllOrgsUnderBase',
+      baseId,
+      {
+        headers: new HttpHeaders().append('x-access-token', token),
+      },
+    );
+  }
+
   createBase(formData) {
     const token = localStorage.getItem('access_token');
     return this.http.post(

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BaseManagerComponent } from './base-manager.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManagerMasterComponent } from './manager-master/manager-master.component';
 import { MessageServiceComponent } from './message-service/message-service.component';
 import { OrgMasterComponent } from './org-master/org-master.component';
@@ -13,11 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashboardComponent
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent
+        redirectTo: 'manager-master',
+        pathMatch: 'full'
       },
       {
         path: 'manager-master',

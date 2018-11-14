@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { BaseService } from './services/base.service';
+import { OrgService } from './services/org.service';
 
 @NgModule({
   declarations: [],
@@ -8,7 +9,8 @@ import { BaseService } from './services/base.service';
   ],
   providers: [
     AuthService,
-    BaseService
+    BaseService,
+    OrgService
   ]
 })
 export class CoreModule { }
