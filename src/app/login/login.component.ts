@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
       first()
     ).subscribe(
       res => {
-        // console.log(res['role']);
         if (res['role'] === 5) {
           this.router.navigate(['/admin']);
         } else if (res['role'] === 4) {
