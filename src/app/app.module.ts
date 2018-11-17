@@ -17,7 +17,7 @@ import { OrgOwnerModule } from './org-owner/org-owner.module';
 import { OrgManagerModule } from './org-manager/org-manager.module';
 
 function tokenGetter() {
-  return localStorage.getItem('access_token');
+  return localStorage.getItem('x-access-token');
 }
 
 @NgModule({
