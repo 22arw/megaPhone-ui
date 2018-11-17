@@ -9,6 +9,18 @@ export interface Base {
   updatedAt?: string; // (Date) user is at least a base manager
 }
 
+export interface CreateBaseReturns extends StandardResponse {
+  base: Base;
+}
+
+export interface GetAllBasesReturns extends StandardResponse {
+  bases: Base[];
+}
+
+export interface IsEmailUniqueReturns extends StandardResponse {
+  isEmailUnique: boolean;
+}
+
 export interface LoginReturns {
   token: string;
   needsPasswordChange: boolean;
