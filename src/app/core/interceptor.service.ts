@@ -3,8 +3,10 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpEvent
+  HttpEvent,
+  HttpResponse
 } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 import { Observable } from 'rxjs';
 
@@ -16,14 +18,28 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const idToken = localStorage.getItem('x-access-token');
 
-    if (idToken) {
-      const cloned = req.clone({
-        headers: req.headers.set('x-access-token', idToken)
-      });
-      return next.handle(cloned);
-    } else {
-      console.log(req);
-      return next.handle(req);
-    }
+    return next.handle(req).pipe(
+      tap((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          console.log('received response.');
+
+          if (event.body.token) {
+            localStorage.setItem('x-access-token', event.body.token);
+          }
+
+          if (event.body.error) {
+            console.log(event.body.error);
+          }
+
+          return event;
+        } else if (idToken) {
+          const cloned = req.clone({
+            headers: req.headers.set('x-access-token', idToken)
+          });
+          return cloned;
+        }
+        return event;
+      })
+    );
   }
 }
