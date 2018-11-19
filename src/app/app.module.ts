@@ -9,14 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
 import { MessageComponent } from './message/message.component';
-
-function tokenGetter() {
-  return localStorage.getItem('x-access-token');
-}
 
 @NgModule({
   declarations: [
@@ -35,7 +30,6 @@ function tokenGetter() {
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CoreModule,
     AppRoutingModule
   ],
   providers: [
