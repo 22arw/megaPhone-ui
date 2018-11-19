@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as i from './interfaces';
 
@@ -44,10 +48,12 @@ export class ApiService {
    * @param res response from server.
    */
   private handleStandardResponse(
-    res: i.StandardResponse,
+    res: i.StandardResponse | i.LoginReturns,
     successMessage?: string
   ) {
-    if (!res.success) {
+    localStorage.setItem('x-access-token', res.token);
+
+    if (!(<i.StandardResponse>res).success) {
       // send feedback to user.
     } else if (successMessage) {
       console.log(successMessage);
@@ -130,6 +136,7 @@ export class ApiService {
             `${res.needsPasswordChange}`
           );
           localStorage.setItem('role', res.role.toString());
+          this.handleStandardResponse(res, 'hey');
           console.log('logged in!');
           this.router.navigate(['bases']);
         },
@@ -151,6 +158,7 @@ export class ApiService {
    * @description queries the api to get a list of bases available for the user. Updates the Bases observable datastore.
    */
   getBases() {
+    // const headers = new HttpHeaders({'x-access-token': localStorage.getItem('x-access-token')});
     this.http
       .get<i.GetAllBasesReturns>(this.API_BASE_URL + '/api/base/getAllBases')
       .toPromise()
