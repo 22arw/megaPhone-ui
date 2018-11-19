@@ -1,0 +1,54 @@
+<div class="content-container">
+  <div class="content-area">
+    <div class="clr-row">
+      <div class="clr-col-sm-12 clr-col-md-5">
+        <clr-datagrid [(clrDgSingleSelected)]="selectedBase" (clrDgSingleSelectedChange)="onSelect($event)">
+          <clr-dg-column>ID</clr-dg-column>
+          <clr-dg-column>Installation</clr-dg-column>
+          <clr-dg-column>Status</clr-dg-column>
+
+          <clr-dg-row *clrDgItems="let base of bases" [clrDgItem]="base" [(clrDgSelected)]="base.selected">
+            <clr-dg-cell>{{base.id}}</clr-dg-cell>
+            <clr-dg-cell>{{base.baseName}}</clr-dg-cell>
+            <clr-dg-cell>{{base.isActive? 'Active':'Inactive'}}</clr-dg-cell>
+          </clr-dg-row>
+
+          <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="10">
+              {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+              of {{pagination.totalItems}} bases
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+      <div class="clr-col-sm-12 clr-col-md-7">
+        <div class="card" *ngIf="selectedBase">
+          <div class="card-header">
+            {{ selectedBase.baseName }}
+          </div>
+          <div class="card-block">
+            <div class="card-title">
+              Status: <span class="label clickable" [ngClass]="selectedBase.isActive? 'label-success': 'label-danger'">{{
+                selectedBase.isActive? 'Active': 'Inactive'}}</span>
+            </div>
+            <div class="card-text">
+              <p><span class="p4">Bandwidth User ID: </span><code class="language-html">{{ selectedBase.bandWidthUserId }}</code></p>             
+              <p><span class="p4">Bandwidth API Token: </span><code class="language-html">{{ selectedBase.bandwidthApiToken }}</code></p>
+              <p><span class="p4">Bandwidth API Secret: </span><code class="language-html">{{ selectedBase.bandwidthApiSecret }}</code></p>
+              <p><span class="p4">Date Created: </span><code class="language-html">{{ selectedBase.createdAt | date }}</code></p>
+              <p><span class="p4">Date Last Updated: </span><code class="language-html">{{ selectedBase.updatedAt | date }}</code></p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <!-- <div class="form-group">
+              <div class="toggle-switch">
+                <input type="checkbox" id="toggle_1">
+                <label for="toggle_1">Base is {{ selectedBase.isActive? 'Active': 'Inactive' }}</label>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
