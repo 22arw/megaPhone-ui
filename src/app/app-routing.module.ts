@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { AdminComponent } from './admin/admin.component';
+// import { AdminComponent } from './admin/admin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
@@ -15,21 +15,17 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: AdminComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'home',
     component: HomeComponent
   },
   {
     path: 'bases',
-    component: BasesComponent
+    component: BasesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
     component: PageNotFoundComponent
-  },
+  }
 ];
 
 @NgModule({
