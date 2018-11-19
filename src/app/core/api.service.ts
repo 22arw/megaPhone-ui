@@ -131,7 +131,7 @@ export class ApiService {
           );
           localStorage.setItem('role', res.role.toString());
           console.log('logged in!');
-          this.router.navigate(['/home']);
+          this.router.navigate(['bases']);
         },
         err => {
           this.handleError(err);

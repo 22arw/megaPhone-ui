@@ -42,7 +42,7 @@ export class AuthService {
 
   appLogOut() {
     localStorage.removeItem('access_token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
   public get loggedIn(): boolean {

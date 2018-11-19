@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (isTokenExpired()) {
-      this.router.navigate(['bases']);
+      this.router.navigate(['login']);
     }
     return true;
   }
@@ -64,7 +64,7 @@ export class ForwardIfLoggedIn implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const isAuthenticated = !isTokenExpired();
     if (isAuthenticated) {
-      this.router.navigate(['home']);
+      this.router.navigate(['bases']);
     }
     return true;
   }
