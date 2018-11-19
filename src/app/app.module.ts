@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptor.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +18,8 @@ import { InMemoryDataService } from './fake-services/in-memory-data.service';
 import { BasesComponent } from './bases/bases.component';
 import { MessageComponent } from './message/message.component';
 
-export function tokenGetter() {
-  return localStorage.getItem('access_token');
+function tokenGetter() {
+  return localStorage.getItem('x-access-token');
 }
 
 @NgModule({
@@ -39,7 +40,10 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:4000', 'https://megaphone-test.herokuapp.com'],
+        whitelistedDomains: [
+          'localhost:4000',
+          'https://megaphone-test.herokuapp.com'
+        ],
         blacklistedRoutes: ['localhost:4000/api/auth']
       }
     }),
@@ -51,7 +55,9 @@ export function tokenGetter() {
     CoreModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
