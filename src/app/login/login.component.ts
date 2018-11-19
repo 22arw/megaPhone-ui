@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClrPassword } from '@clr/angular/forms';
-import { AuthService } from '../core/services/auth.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { ApiService } from '../core/api.service';
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.api.login(data.email, data.password);
   }
 
-  constructor(public auth: AuthService, public router: Router, private api: ApiService) {}
+  constructor(public router: Router, private api: ApiService) {}
 
   ngOnInit() {}
 }
