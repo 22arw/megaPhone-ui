@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as i from './interfaces';
 
@@ -22,6 +18,9 @@ export class ApiService {
    */
   private _Bases = new BehaviorSubject<i.Base[]>([]);
   Bases: Observable<i.Base[]> = this._Bases.asObservable();
+
+  private _Orgs = new BehaviorSubject<i.Organization[]>([]);
+  Orgs: Observable<i.Organization[]> = this._Orgs.asObservable();
 
   /**
    * Constructor
@@ -164,7 +163,92 @@ export class ApiService {
       .toPromise()
       .then(
         res => {
+          this.handleStandardResponse(res);
           this._Bases.next(res.bases);
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  /**
+   * @description Retrieves all messages sent under the org.
+   * @param orgId The orgId to retrieve all of the messages under.
+   * @returns An array of objects representing the message.
+   */
+  getAllMessagesSentByOrg(orgId: number): Promise<i.Message[]> {
+    return this.http
+      .post<i.GetAllMessagesSentByOrgReturns>(
+        this.API_BASE_URL + '/api/organization/getAllMessagesSentByOrg',
+        { orgId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          return res.messages;
+        },
+        err => {
+          this.handleError(err);
+          return [];
+        }
+      );
+  }
+
+  getNumberOfSubscribers(orgId: number): Promise<number> {
+    return this.http
+      .post<i.GetNumberOfSubscribersReturns>(
+        this.API_BASE_URL + '/api/organization/getNumberOfSubscribers',
+        { orgId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          return res.numberOfSubscribers;
+        },
+        err => {
+          this.handleError(err);
+          return 0;
+        }
+      );
+  }
+
+  /**
+   * @description Gets all of the orgs for the user and updates the orgs observable datastore.
+   * Be sure to subscribe to the Orgs datastore for updates.
+   */
+  getOrgs(): void {
+    this.http
+      .get<i.GetOrgsReturns>(this.API_BASE_URL + '/api/organization')
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          this._Orgs.next(res.orgs);
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  /**
+   * @description Sends the message to subscribers of the organization.
+   * @param orgId The orgId to send the message from
+   * @param message The message to send to the subscribers of the org.
+   */
+  sendMessage(orgId: number, message: string): void {
+    this.http
+      .post<i.StandardResponse>(this.API_BASE_URL + 'api/message/send', {
+        orgId,
+        message
+      })
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Message sent successfully!');
         },
         err => {
           this.handleError(err);
