@@ -234,6 +234,16 @@ export class ApiService {
       );
   }
 
+  getUserInfo(): Promise<i.UserData> {
+    return this.http.get<i.GetUserDataReturns>(this.API_BASE_URL + '/api/user').toPromise().then(res => {
+      this.handleStandardResponse(res);
+      return res.user;
+    }, err => {
+      this.handleError(err);
+      return err;
+    });
+  }
+
   /**
    * @description Sends the message to subscribers of the organization.
    * @param orgId The orgId to send the message from

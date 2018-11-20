@@ -16,6 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageStatComponent } from './message-stat/message-stat.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MessageStatComponent } from './message-stat/message-stat.component';
     DashboardComponent,
     OrganizationsComponent,
     MessageListComponent,
-    MessageStatComponent
+    MessageStatComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
