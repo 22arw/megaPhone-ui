@@ -18,6 +18,18 @@ export interface GetAllBasesReturns extends StandardResponse {
   bases: Base[];
 }
 
+export interface GetAllMessagesSentByOrgReturns extends StandardResponse {
+  messages: Message[];
+}
+
+export interface GetNumberOfSubscribersReturns extends StandardResponse {
+  numberOfSubscribers?: number;
+}
+
+export interface GetOrgsReturns extends StandardResponse {
+  orgs: Organization[];
+}
+
 export interface IsEmailUniqueReturns extends StandardResponse {
   isEmailUnique: boolean;
 }
@@ -26,6 +38,24 @@ export interface LoginReturns {
   token: string;
   needsPasswordChange: boolean;
   role: number; // corresponds to a level of access.
+}
+
+export interface Message {
+  userId: number;
+  orgId: number;
+  message: string;
+  sent: string; // timestamp the message was sent.
+}
+
+export interface Organization {
+  id: number;
+  orgName: string;
+  orgOwner: number; // UserId
+  baseId: number;
+  subscriptionCode: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface StandardResponse {
