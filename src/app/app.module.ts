@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
 import { MessageComponent } from './message/message.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MessageComponent } from './message/message.component';
     PageNotFoundComponent,
     HomeComponent,
     BasesComponent,
-    MessageComponent
+    MessageComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

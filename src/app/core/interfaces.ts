@@ -63,3 +63,31 @@ export interface StandardResponse {
   success: boolean;
   error?: string;
 }
+
+export interface GetUserDataReturns extends StandardResponse {
+  user: UserData;
+}
+
+export interface UserData {
+  token: string;
+  success: boolean;
+  email: string;
+  isAdmin: boolean;
+  bases: [
+    {
+      baseId: number;
+      baseName: string;
+      basePhoneNumber: string;
+      isBaseManager: boolean;
+      orgs: [
+        {
+          orgId: number;
+          orgName: string;
+          subscriptionCode: string;
+          numberOfSubscribers: number;
+          isOrgOwner: boolean;
+        }
+      ];
+    }
+  ];
+}

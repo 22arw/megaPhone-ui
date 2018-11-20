@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard, ForwardIfLoggedIn } from './core/routeGuards/auth.guard';
 
 const routes: Routes = [
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'bases',
     component: BasesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {
