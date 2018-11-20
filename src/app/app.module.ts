@@ -12,6 +12,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
 import { MessageComponent } from './message/message.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { OrganizationsComponent } from './organizations/organizations.component';
+import { MessageListComponent } from './message-list/message-list.component';
+import { MessageStatComponent } from './message-stat/message-stat.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { MessageComponent } from './message/message.component';
     PageNotFoundComponent,
     HomeComponent,
     BasesComponent,
-    MessageComponent
+    MessageComponent,
+    DashboardComponent,
+    OrganizationsComponent,
+    MessageListComponent,
+    MessageStatComponent
   ],
   imports: [
     BrowserModule,

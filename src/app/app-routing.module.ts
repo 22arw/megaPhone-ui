@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomeComponent } from './home/home.component';
 import { BasesComponent } from './bases/bases.component';
 import { AuthGuard, ForwardIfLoggedIn } from './core/routeGuards/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -17,8 +18,8 @@ const routes: Routes = [
     canActivate: [ForwardIfLoggedIn]
   },
   {
-    path: 'bases',
-    component: BasesComponent,
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [AuthGuard]
   },
   {

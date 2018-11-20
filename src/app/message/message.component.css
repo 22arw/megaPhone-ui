@@ -1,0 +1,18 @@
+.clr-control-container {
+    display: inline-block;
+    width: 100% !important;
+}
+
+.clr-textarea-wrapper {
+    white-space: nowrap;
+    display: flex;
+    margin-top: .25rem;
+    width: 100% !important;
+}
+
+.textarea-wrapper {
+    white-space: nowrap;
+    display: flex;
+    margin-top: .25rem;
+    width: 100% !important;
+}
