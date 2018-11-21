@@ -21,10 +21,12 @@ export class MessageComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (changes.message) {
       console.log('Changes to message: ', this.message);
       this.messageOutput.emit(this.message);
+    }
+    if (changes.org) {
+      this.message = '';
     }
   }
 
@@ -34,7 +36,11 @@ export class MessageComponent implements OnInit, OnChanges {
   }
 
   sendMessage() {
-    this.api.sendMessage(this.org.id, this.message);
+    this.api.sendMessage(Number(this.org.id), this.message.toString());
+  }
+
+  isDisabled(): boolean {
+    return !this.org || this.message.length === 0;
   }
 
 }

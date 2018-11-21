@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { ApiService } from '../core/api.service';
 import * as i from '../core/interfaces';
 
@@ -17,11 +23,16 @@ export class MessageListComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.orgId) {
+    if (
+      changes.orgId.currentValue !== changes.orgId.previousValue &&
+      changes.orgId.currentValue !== null
+    ) {
       this.api.getAllMessagesSentByOrg(this.orgId).then(res => {
         console.log(res);
         this.messages = res;
       });
+    } else {
+      this.messages = [];
     }
   }
 }

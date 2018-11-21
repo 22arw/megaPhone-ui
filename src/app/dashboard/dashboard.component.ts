@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   orgsByBase: i.Organization[];
   selectedBase: i.Base;
   selectedOrg: i.Organization;
+  selectedOrgId: number;
   message: string;
 
   constructor(private api: ApiService) {}
@@ -35,8 +36,14 @@ export class DashboardComponent implements OnInit {
   }
 
   orgsOutput($event: i.Organization) {
-    this.selectedOrg = $event;
     console.log('Orgs Output: ', $event);
+    if ($event) {
+      this.selectedOrg = $event;
+      this.selectedOrgId = $event.id;
+    } else {
+      this.selectedOrgId = null;
+      this.selectedOrg = null;
+    }
   }
 
   messageOutput($event: string) {

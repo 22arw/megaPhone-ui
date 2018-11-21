@@ -251,7 +251,7 @@ export class ApiService {
    */
   sendMessage(orgId: number, message: string): void {
     this.http
-      .post<i.StandardResponse>(this.API_BASE_URL + 'api/message/send', {
+      .post<i.StandardResponse>(this.API_BASE_URL + '/api/message/send', {
         orgId,
         message
       })

@@ -1,17 +1,21 @@
 <div class="card">
-  <div class="card-header">
-    Message Preview:
-  </div>
+  <div class="card-header">Message Preview:</div>
   <div class="card-block">
-    <h4 class="card-title">{{ 'Organization 1' }}</h4>
-    <p class="card-text">
-      {{message}}
-    </p>
+    <p class="card-text">{{ message }}</p>
+    <p class="card-text" style="text-align: right;">- {{ org.subscriptionCode }}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>{{ '2,046' }}</b> characters used in message</li>
-    <li class="list-group-item">Sent using: <b>{{ '+14569875566' }}</b></li>
-    <li class="list-group-item">Subscribed by <b>{{ '1,000' }}</b> viewers</li>
-    <li class="list-group-item">Message Cost Estimate: <b>{{ '$2.06' }}</b></li>
+    <li class="list-group-item">
+      <b>{{ message?.length || 0 }}</b> characters used
+    </li>
+    <li class="list-group-item">
+      Subscribers: <b>{{ subscribers || 0 }}</b>
+    </li>
+    <li class="list-group-item">
+      Message Cost Estimate: <b>{{ (subscribers || 0) * 0.005 | currency }}</b>
+    </li>
+    <li class="list-group-item">
+      To subscribe:<br>Text <b>{{org.subscriptionCode | uppercase}}</b> to <b>{{ toPrettyPhone(base.basePhoneNumber) }}</b>
+    </li>
   </ul>
 </div>

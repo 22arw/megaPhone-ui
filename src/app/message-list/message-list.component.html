@@ -1,12 +1,14 @@
 <clr-datagrid>
-    <clr-dg-column>Email</clr-dg-column>
+    
     <clr-dg-column>Message</clr-dg-column>
+    <clr-dg-column>Sent By</clr-dg-column>
     <clr-dg-row *clrDgItems="let message of messages;" [clrDgItem]="message">
-        <clr-dg-cell>{{message?.userId}}</clr-dg-cell>
+        
         <clr-dg-cell>{{ (message?.message.length>6)? (message?.message | slice:0:45)+'..':(message?.message) }}</clr-dg-cell>
         <clr-dg-row-detail *clrIfExpanded [clrDgReplace]="true">
             {{message?.message}}
         </clr-dg-row-detail>
+        <clr-dg-cell>{{message?.email}}</clr-dg-cell>
     </clr-dg-row>
     <clr-dg-footer>
         <clr-dg-pagination #pagination [clrDgPageSize]="6">
