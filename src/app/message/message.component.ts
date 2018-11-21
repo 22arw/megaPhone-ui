@@ -15,15 +15,15 @@ export class MessageComponent implements OnInit {
 
   @Output() messageOutput = new EventEmitter<string>();
 
-  message: string;
+  message = '';
 
   ngOnInit() {
   }
 
   outputMessage(e: Event) {
     console.log(e);
+    console.log(this.message);
     this.messageOutput.emit('a message.');
-    this.message = '';
   }
 
   sendMessage() {
