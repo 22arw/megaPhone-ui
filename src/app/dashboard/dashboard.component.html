@@ -11,10 +11,10 @@
         <app-message [org]="selectedOrg" (messageOutput)="messageOutput($event)"></app-message>
         <h4>Your Sent Messages</h4>
         <hr>
-        <app-message-list></app-message-list>
+        <app-message-list [orgId]="selectedOrg.id"></app-message-list>
       </div>
       <div class="clr-col-md-4">
-        <app-message-stat></app-message-stat>
+        <app-message-stat [message]="message"></app-message-stat>
       </div>
     </div>
   </div>
