@@ -21,12 +21,16 @@ export class OrganizationsComponent implements OnInit, OnChanges {
 
   @Output() orgsOutput = new EventEmitter<i.Organization>();
 
+  selectedOrg: Object;
+
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.orgs.currentValue) {
       console.log('Org component onChange: ', changes);
       this.onSelect(changes.orgs.currentValue[0]);
+      console.log('Org component on load: ', changes.orgs.currentValue[0]);
+      this.selectedOrg = changes.orgs.currentValue[0];
     }
   }
 
