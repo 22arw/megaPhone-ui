@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ApiService } from '../core/api.service';
+import * as i from '../core/interfaces';
 
 @Component({
   selector: 'app-message-list',
@@ -8,11 +10,17 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class MessageListComponent implements OnInit, OnChanges {
   @Input() orgId: number;
 
-  messages = [];
+  messages: i.Message[];
 
-  constructor() {}
+  constructor(private api: ApiService) {}
 
   ngOnInit() {}
 
-  ngOnChanges() {}
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.orgId) {
+      this.api.getAllMessagesSentByOrg(this.orgId).then(res => {
+        this.messages = res;
+      });
+    }
+  }
 }
