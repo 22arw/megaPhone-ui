@@ -1,8 +1,8 @@
-<clr-datagrid>
+<clr-datagrid [clrDgSingleSelected]="selectedOrg" (clrDgSingleSelectedChange)="onSelect($event)">
     <clr-dg-column>ID</clr-dg-column>
     <clr-dg-column>Organization</clr-dg-column>
     
-    <clr-dg-row *ngFor="let org of orgs">
+    <clr-dg-row *clrDgItems="let org of orgs" [clrDgItem]="org">
         <clr-dg-cell>{{org?.id}}</clr-dg-cell>
         <clr-dg-cell>{{org?.orgName}}</clr-dg-cell>
     </clr-dg-row>
