@@ -1,16 +1,12 @@
 <clr-datagrid>
-    <clr-dg-column>ID</clr-dg-column>
+    <clr-dg-column>Email</clr-dg-column>
     <clr-dg-column>Message</clr-dg-column>
     <clr-dg-row *clrDgItems="let message of messages; let i = index;" [clrDgItem]="message">
         <clr-dg-cell>{{i + 1}}</clr-dg-cell>
         <clr-dg-cell>{{ (message.text.length>6)? (message.text | slice:0:45)+'..':(message.text) }}</clr-dg-cell>
-        <clr-signpost>
-                <clr-icon shape="chat-bubble" clrSignpostTrigger style="margin-right:10px;"></clr-icon>
-            <clr-signpost-content *clrIfOpen>
-                <p>{{message.id}}</p>
-                <p>{{message.text}}</p>
-            </clr-signpost-content>
-        </clr-signpost>
+        <clr-dg-row-detail *clrIfExpanded [clrDgReplace]="true">
+            {{message.text}}
+        </clr-dg-row-detail>
     </clr-dg-row>
     <clr-dg-footer>
         <clr-dg-pagination #pagination [clrDgPageSize]="6">
