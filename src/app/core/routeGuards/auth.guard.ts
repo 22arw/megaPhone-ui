@@ -64,7 +64,7 @@ export class ForwardIfLoggedIn implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const isAuthenticated = !isTokenExpired();
     if (isAuthenticated) {
-      this.router.navigate(['bases']);
+      this.router.navigate(['dashboard']);
     }
     return true;
   }

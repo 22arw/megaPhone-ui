@@ -137,7 +137,7 @@ export class ApiService {
           localStorage.setItem('role', res.role.toString());
           this.handleStandardResponse(res, 'hey');
           console.log('logged in!');
-          this.router.navigate(['bases']);
+          this.router.navigate(['dashboard']);
         },
         err => {
           this.handleError(err);

@@ -1,27 +1,26 @@
-
-    <!-- Card -->
-    <div class="card">
-      <div class="card-header">
-        Your List of Bases
+<!-- Card -->
+<div class="card">
+  <div class="card-header">Your List of Bases</div>
+  <div class="card-block">
+    <!--
+      <div class="card-title">
+        Block
       </div>
-      <div class="card-block">
-        <!-- <div class="card-title">
-          Block
-        </div> -->
-        <div class="card-text" style="margin-bottom:2.2rem !important;">
-          <clr-select-container>
-            <label>Currently Viewing Base:</label>
-            <select clrSelect name="options" [(ngModel)]="options">
-              <option value="one" *ngFor="let base of bases">{{ base.baseName }}</option>
-            </select>
-          </clr-select-container>
-
-        </div>
-      </div>
-      <!-- <div class="card-footer">
-        <button class="btn btn-sm btn-link">Footer Action 1</button>
-        <button class="btn btn-sm btn-link">Footer Action 2</button>
-      </div> -->
+    -->
+    <div class="card-text" style="margin-bottom:2.2rem !important;">
+      <clr-select-container>
+        <label>Currently Viewing Base:</label>
+        <select clrSelect [(ngModel)]="selected" (change)="onSelect($event.target.value)">
+          <option *ngFor="let base of bases" [value]="base.id">{{ base?.baseName }}</option>
+        </select>
+      </clr-select-container>
     </div>
-    <!-- Card -->
-
+  </div>
+  <!--
+    <div class="card-footer">
+      <button class="btn btn-sm btn-link">Footer Action 1</button>
+      <button class="btn btn-sm btn-link">Footer Action 2</button>
+    </div>
+  -->
+</div>
+<!-- Card -->

@@ -24,10 +24,12 @@
     "@clr/angular": "^0.13.9",
     "@clr/icons": "^0.13.9",
     "@clr/ui": "^0.13.9",
+    "@types/lodash": "^4.14.118",
     "@webcomponents/custom-elements": "^1.0.0",
     "angular-in-memory-web-api": "^0.7.0",
     "core-js": "^2.5.4",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.11",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
