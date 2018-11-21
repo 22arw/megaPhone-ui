@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
 
@@ -7,7 +7,7 @@ import { ApiService } from '../core/api.service';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnChanges {
 
   constructor(private api: ApiService) { }
 
@@ -20,10 +20,17 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    if (changes.message) {
+      console.log('Changes to message: ', this.message);
+      this.messageOutput.emit(this.message);
+    }
+  }
+
   outputMessage(e: Event) {
-    console.log(e);
     console.log(this.message);
-    this.messageOutput.emit('a message.');
+    this.messageOutput.emit(this.message);
   }
 
   sendMessage() {
