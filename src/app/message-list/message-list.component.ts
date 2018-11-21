@@ -19,6 +19,7 @@ export class MessageListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.orgId) {
       this.api.getAllMessagesSentByOrg(this.orgId).then(res => {
+        console.log(res);
         this.messages = res;
       });
     }
