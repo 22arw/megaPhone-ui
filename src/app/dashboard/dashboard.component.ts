@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
   bases: i.Base[];
   orgs: i.Organization[];
   orgsByBase: i.Organization[];
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email])
   });
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
   ngOnInit() {
     this.api.getUserInfo().then(ret => {
@@ -48,6 +49,13 @@ export class DashboardComponent implements OnInit {
     });
     this.api.getBases();
     this.api.getOrgs();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges', changes);
+    if (changes.bases || changes.orgs) {
+      this.setOrgsByBase(this.selectedBase);
+    }
   }
 
   basesOutput($event: i.Base) {
@@ -80,6 +88,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  showOrgList(): boolean {
+    this.setOrgsByBase(this.selectedBase);
+    return !(_.isEmpty(this.selectedBase) || _.isEmpty(this.orgsByBase));
+  }
+
   doLogout() {
     this.api.logout();
   }
@@ -94,5 +107,4 @@ export class DashboardComponent implements OnInit {
   doAccountDelete() {
     console.log(this.deleteAccntForm.value);
   }
-
 }

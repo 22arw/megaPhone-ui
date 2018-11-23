@@ -24,19 +24,22 @@
     <div class="clr-row">
       <div class="clr-col-md-3">
         <app-bases [bases]="bases" (basesOutput)="basesOutput($event)"></app-bases>
-        <div *ngIf="selectedBase">
+        <div *ngIf="showOrgList()">
           <h4>Your Organizations</h4>
           <hr>
           <app-organizations [orgs]="orgsByBase" (orgsOutput)="orgsOutput($event)"></app-organizations>
         </div>
+        <div *ngIf="!showOrgList()">
+          <p>You have no orgs under this base.</p>
+        </div>
       </div>
-      <div class="clr-col-md-5" *ngIf="selectedOrg">
+      <div class="clr-col-md-5" *ngIf="selectedOrg && showOrgList()">
         <app-message [org]="selectedOrg" (messageOutput)="messageOutput($event)"></app-message>
         <h4>Your Sent Messages</h4>
         <hr>
         <app-message-list [orgId]="selectedOrgId"></app-message-list>
       </div>
-      <div class="clr-col-md-4" *ngIf="selectedOrg">
+      <div class="clr-col-md-4" *ngIf="selectedOrg && showOrgList()">
         <app-message-stat [base]="selectedBase" [org]="selectedOrg" [message]="message"></app-message-stat>
       </div>
     </div>
