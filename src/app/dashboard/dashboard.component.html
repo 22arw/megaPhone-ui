@@ -1,3 +1,24 @@
+<header class="header-6">
+  <div class="branding">
+      <a href="..." class="nav-link">
+          <img src="../../assets/images/MegaPhoneLogo.svg" style="max-width:2.2rem; margin-right:20px;">
+          <span class="title">Megaphone</span>
+      </a>
+  </div>
+  <div class="header-actions">
+      <clr-dropdown>
+          <button class="nav-text" clrDropdownTrigger>
+              {{ user?.email}}
+              <clr-icon shape="caret down"></clr-icon>
+          </button>
+          <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+              <a href="..." clrDropdownItem>Preferences</a>
+              <a href="..." clrDropdownItem>Log out</a>
+          </clr-dropdown-menu>
+      </clr-dropdown>
+  </div>
+</header>
+
 <div class="content-container">
   <div class="content-area">
     <div class="clr-row">

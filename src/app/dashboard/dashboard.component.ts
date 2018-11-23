@@ -15,10 +15,14 @@ export class DashboardComponent implements OnInit {
   selectedOrg: i.Organization;
   selectedOrgId: number;
   message: string;
+  user: i.UserData;
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
+    this.api.getUserInfo().then(ret => {
+      this.user = ret;
+    });
     this.api.Bases.subscribe(bases => {
       this.bases = bases;
     });
