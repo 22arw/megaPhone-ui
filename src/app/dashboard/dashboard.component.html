@@ -1,21 +1,21 @@
 <header class="header-6">
   <div class="branding">
-      <a href="..." class="nav-link">
-          <img src="../../assets/images/MegaPhoneLogo.svg" style="max-width:2.2rem; margin-right:20px;">
-          <span class="title">Megaphone</span>
-      </a>
+    <a href="..." class="nav-link">
+      <img src="../../assets/images/MegaPhoneLogo.svg" style="max-width:2.2rem; margin-right:20px;">
+      <span class="title">Megaphone</span>
+    </a>
   </div>
   <div class="header-actions">
-      <clr-dropdown>
-          <button class="nav-text" clrDropdownTrigger>
-              {{ user?.email}}
-              <clr-icon shape="caret down"></clr-icon>
-          </button>
-          <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-              <a href="..." clrDropdownItem>Preferences</a>
-              <a href="..." clrDropdownItem>Log out</a>
-          </clr-dropdown-menu>
-      </clr-dropdown>
+    <clr-dropdown>
+      <button class="nav-text" clrDropdownTrigger>
+        {{ user?.email}}
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a (click)="preferencesModal = true" clrDropdownItem>Preferences</a>
+        <a (click)="doLogout()" clrDropdownItem>Log out</a>
+      </clr-dropdown-menu>
+    </clr-dropdown>
   </div>
 </header>
 
@@ -42,3 +42,75 @@
     </div>
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="preferencesModal" [clrModalStaticBackdrop]="true">
+  <h3 class="modal-title">Account Preferences</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="emailUpdateForm" clrLayout="horizontal" (ngSubmit)="doEmailUpdate()">
+
+      <p>Email Settings:</p>
+
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-4">Update Email</label>
+        <input class="clr-col-xs-12 clr-col-md-4" clrInput type="email" formControlName="email" />
+        <clr-control-helper>Your new email address</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+      </clr-input-container>
+
+      <div style="margin-top:1rem;">
+        <button type="submit" class="btn btn-primary" [disabled]="!emailUpdateForm.valid">Update Email</button>
+      </div>
+
+    </form>
+    <form clrForm [formGroup]="passwordUpdateForm" clrLayout="horizontal" (ngSubmit)="doPasswordUpdate()">
+
+      <p>Password Settings:</p>
+
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-4">Old Password</label>
+        <input class="clr-col-xs-12 clr-col-md-4" clrInput type="password" formControlName="password" />
+        <clr-control-helper>Your existing password</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+      </clr-input-container>
+
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-4">New Password</label>
+        <input class="clr-col-xs-12 clr-col-md-4" clrInput type="password" formControlName="newPassword" />
+        <clr-control-helper>Your new password</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+      </clr-input-container>
+
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-4">Confirm Password</label>
+        <input class="clr-col-xs-12 clr-col-md-4" clrInput type="password" formControlName="conifrmPassword" />
+        <clr-control-helper>Confirm new password</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+      </clr-input-container>
+
+      <div style="margin-top:1rem;">
+        <button class="btn btn-primary" [disabled]="!passwordUpdateForm.valid">Update Password</button>
+      </div>
+
+    </form>
+    <form clrForm [formGroup]="deleteAccntForm" clrLayout="horizontal" (ngSubmit)="doAccountDelete()">
+
+      <p>Delete Account:</p>
+
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-4">Email</label>
+        <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" formControlName="email" />
+        <clr-control-helper>Type your email to confirm</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+      </clr-input-container>
+
+      <div style="margin-top:1rem;">
+        <button class="btn btn-danger btn-icon" [disabled]="!deleteAccntForm.valid"><clr-icon shape="warning-standard" style="margin-right:10px;"></clr-icon>Delete Account</button>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="preferencesModal = false">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="preferencesModal = false">Ok</button>
+  </div>
+</clr-modal>

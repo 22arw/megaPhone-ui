@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,23 @@ export class DashboardComponent implements OnInit {
   message: string;
   user: i.UserData;
 
-  constructor(private api: ApiService) {}
+  preferencesModal = false;
+
+  emailUpdateForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  });
+
+  passwordUpdateForm = new FormGroup({
+    oldPassword: new FormControl('', Validators.required),
+    newPassword: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required)
+  });
+
+  deleteAccntForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  });
+
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.api.getUserInfo().then(ret => {
@@ -62,4 +79,20 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
+
+  doLogout() {
+    this.api.logout();
+  }
+
+  doEmailUpdate() {
+    console.log(this.emailUpdateForm.value);
+  }
+
+  doPasswordUpdate() {
+    console.log(this.passwordUpdateForm.value);
+  }
+  doAccountDelete() {
+    console.log(this.deleteAccntForm.value);
+  }
+
 }
