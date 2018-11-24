@@ -1,10 +1,10 @@
 <clr-datagrid [clrDgSingleSelected]="selectedOrg" (clrDgSingleSelectedChange)="onSelect($event)">
     <clr-dg-column>Organization</clr-dg-column>
     
-    <clr-dg-row *clrDgItems="let org of orgs" [clrDgItem]="org">
+    <clr-dg-row *clrDgItems="let org of _orgs" [clrDgItem]="org">
         <clr-dg-cell>{{org?.orgName}}</clr-dg-cell>
     </clr-dg-row>
     
    
-    <clr-dg-footer>{{orgs?.length}} Organizations Managed</clr-dg-footer>
+    <clr-dg-footer>{{_orgs?.length}} Organizations Managed</clr-dg-footer>
 </clr-datagrid>

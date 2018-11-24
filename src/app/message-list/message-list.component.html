@@ -1,9 +1,10 @@
 <clr-datagrid>
-    
+    <clr-dg-column>Time Sent</clr-dg-column>
     <clr-dg-column>Message</clr-dg-column>
     <clr-dg-column>Sent By</clr-dg-column>
+    <clr-dg-placeholder>No messages have been sent yet.</clr-dg-placeholder>
     <clr-dg-row *clrDgItems="let message of messages;" [clrDgItem]="message">
-        
+        <clr-dg-cell>{{message?.sent | date:'MMM d, y @ HH:mm'}}</clr-dg-cell>
         <clr-dg-cell>{{ (message?.message.length>6)? (message?.message | slice:0:45)+'..':(message?.message) }}</clr-dg-cell>
         <clr-dg-row-detail *clrIfExpanded [clrDgReplace]="true">
             {{message?.message}}

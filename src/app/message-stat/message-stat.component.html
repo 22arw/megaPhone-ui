@@ -2,7 +2,7 @@
   <div class="card-header">Message Preview:</div>
   <div class="card-block">
     <p class="card-text">{{ message }}</p>
-    <p class="card-text" style="text-align: right;">- {{ org.subscriptionCode }}</p>
+    <p class="card-text" style="text-align: right;">- {{ org.subscriptionCode | uppercase }}</p>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">
@@ -15,7 +15,7 @@
       Message Cost Estimate: <b>{{ (subscribers || 0) * 0.005 | currency }}</b>
     </li>
     <li class="list-group-item">
-      To subscribe:<br>Text <b>{{org.subscriptionCode | uppercase}}</b> to <b>{{ toPrettyPhone(base.basePhoneNumber) }}</b>
+      Text <b>{{org.subscriptionCode | uppercase}}</b> to <b>{{ toPrettyPhone(base.basePhoneNumber) }}</b>
     </li>
   </ul>
 </div>

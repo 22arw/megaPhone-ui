@@ -1,7 +1,7 @@
 <form class="clr-form" style="padding-top: .8rem">
     <div class="clr-control-container" style="width: 100% !important;">
-      <label style="font-weight: bolder !important">Send this message to your organization:</label>
-      <textarea rows="4" placeholder="Greetings Organization" class="clr-textarea" style="width: 100% !important;" [(ngModel)]="message" name="message" (keyup)="outputMessage($event)" [disabled]="!org" maxlength="{{2048 - 3 - org?.subscriptionCode.length}}"></textarea>
+      <!-- <label style="font-weight: bolder !important">Send this message to your subscribers:</label> -->
+      <textarea rows="4" placeholder="{{placeholder}}" class="clr-textarea" style="width: 100% !important;" [(ngModel)]="message" name="message" (keyup)="outputMessage($event)" [disabled]="!org" maxlength="{{2048 - 3 - org?.subscriptionCode.length}}"></textarea>
     </div>
     <div>
       <button (click)="sendMessage()" class="btn btn-primary" [disabled]="isDisabled()">Send Message</button>

@@ -26,7 +26,7 @@ export class MessageStatComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.org) {
-      console.log('updating subscriber count');
+      // console.log('updating subscriber count');
       this.api.getNumberOfSubscribers(this.org.id).then(res => {
         this.subscribers = res;
       });

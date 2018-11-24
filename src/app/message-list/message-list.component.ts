@@ -14,6 +14,8 @@ import * as i from '../core/interfaces';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit, OnChanges {
+  // private _orgId: number;
+
   @Input() orgId: number;
 
   messages: i.Message[];
@@ -23,13 +25,17 @@ export class MessageListComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
+    // console.log('message received new org: ', this.orgId);
     if (
       changes.orgId.currentValue !== changes.orgId.previousValue &&
       changes.orgId.currentValue !== null
     ) {
       this.api.getAllMessagesSentByOrg(this.orgId).then(res => {
-        console.log(res);
-        this.messages = res;
+        // console.log(res);
+        // sort messages by timestamp
+        this.messages = res.sort(function(a, b) {
+          return Date.parse(b.sent) - Date.parse(a.sent);
+        });
       });
     } else {
       this.messages = [];

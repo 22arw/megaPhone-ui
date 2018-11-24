@@ -27,14 +27,14 @@ export class BasesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.bases.currentValue[0]) {
-      console.log('Bases component onChange: ', changes);
+      // console.log('Bases component onChange: ', changes);
       this.selected = changes.bases.currentValue[0].id;
       this.onSelect(this.selected);
     }
   }
 
   onSelect(baseId: number) {
-    console.log('Selected baseId: ', baseId);
+    // console.log('Selected baseId: ', baseId);
     const base = this.bases.filter(eachBase => {
       // tslint:disable-next-line:triple-equals
       return eachBase.id == baseId;

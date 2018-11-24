@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnChanges {
+export class DashboardComponent implements OnInit {
   bases: i.Base[];
   orgs: i.Organization[];
   orgsByBase: i.Organization[];
@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, OnChanges {
   });
 
   passwordUpdateForm = new FormGroup({
-    oldPassword: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
     newPassword: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', Validators.required)
   });
@@ -46,26 +46,20 @@ export class DashboardComponent implements OnInit, OnChanges {
     });
     this.api.Orgs.subscribe(orgs => {
       this.orgs = orgs;
+      this.setOrgsByBase(this.selectedBase);
     });
     this.api.getBases();
     this.api.getOrgs();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('ngOnChanges', changes);
-    if (changes.bases || changes.orgs) {
-      this.setOrgsByBase(this.selectedBase);
-    }
-  }
-
   basesOutput($event: i.Base) {
     this.selectedBase = $event;
     this.setOrgsByBase($event);
-    console.log('Bases output: ', $event);
+    // console.log('Bases output: ', $event);
   }
 
   orgsOutput($event: i.Organization) {
-    console.log('Orgs Output: ', $event);
+    // console.log('Orgs Output: ', $event);
     if ($event) {
       this.selectedOrg = $event;
       this.selectedOrgId = $event.id;
@@ -77,7 +71,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   messageOutput($event: string) {
     this.message = $event;
-    console.log('Message Output:', $event);
+    // console.log('Message Output:', $event);
   }
 
   setOrgsByBase(base: i.Base) {
@@ -89,7 +83,6 @@ export class DashboardComponent implements OnInit, OnChanges {
   }
 
   showOrgList(): boolean {
-    this.setOrgsByBase(this.selectedBase);
     return !(_.isEmpty(this.selectedBase) || _.isEmpty(this.orgsByBase));
   }
 

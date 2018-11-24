@@ -58,7 +58,7 @@ export class ApiService {
       console.log(successMessage);
       // handle success message
     } else {
-      console.log('Success! No success message provided.');
+      console.log('Success!');
     }
   }
 
