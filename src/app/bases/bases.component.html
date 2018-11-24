@@ -11,7 +11,7 @@
         <div class="card-text" style="margin-bottom:2.2rem !important;">
           <clr-select-container>
             <label>Currently Viewing Base:</label>
-            <select clrSelect name="options" [(ngModel)]="options">
+            <select clrSelect name="selectedBase" [(ngModel)]="selectedBase" (onchange)="showSelected()">
               <option value="one" *ngFor="let base of bases">{{ base.baseName }}</option>
             </select>
           </clr-select-container>

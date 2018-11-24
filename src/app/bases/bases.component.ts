@@ -9,7 +9,8 @@ import { ApiService } from '../core/api.service';
 })
 export class BasesComponent implements OnInit {
   bases: Base[];
-  selectedBase: Base;
+  selectedBase: string;
+  // selectedBase: Base;
 
   constructor(private api: ApiService) {}
 
@@ -22,8 +23,12 @@ export class BasesComponent implements OnInit {
 
   getBases() {}
 
-  onSelect(base: Base) {
-    this.selectedBase = base;
-    console.log(base);
+  // onSelect(base: Base) {
+  //   this.selectedBase = base;
+  //   console.log(base);
+  // }
+
+  showSelected() {
+    console.log(this.selectedBase);
   }
 }
