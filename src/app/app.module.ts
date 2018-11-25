@@ -17,6 +17,9 @@ import { OrganizationsComponent } from './organizations/organizations.component'
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageStatComponent } from './message-stat/message-stat.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { ProfileComponent } from './profile/profile.component';
     OrganizationsComponent,
     MessageListComponent,
     MessageStatComponent,
-    ProfileComponent
+    ProfileComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,9 @@ import { ProfileComponent } from './profile/profile.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

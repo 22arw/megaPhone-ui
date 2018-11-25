@@ -16,3 +16,8 @@
     margin-top: .25rem;
     width: 100% !important;
 }
+
+.no-subs {
+    font-size: .75em;
+    color: 	#cc3300;
+}

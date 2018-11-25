@@ -13,14 +13,11 @@ import { ApiService } from '../core/api.service';
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3)
-    ])
+    password: new FormControl('', [Validators.required])
   });
 
   login() {
-    const data = this.loginForm.value as {email: string, password: string};
+    const data = this.loginForm.value as { email: string; password: string };
     this.api.login(data.email, data.password);
   }
 

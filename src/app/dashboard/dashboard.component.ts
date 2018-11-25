@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 
 @Component({
@@ -17,30 +16,10 @@ export class DashboardComponent implements OnInit {
   selectedOrg: i.Organization;
   selectedOrgId: number;
   message: string;
-  user: i.UserData;
-
-  preferencesModal = false;
-
-  emailUpdateForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
-  });
-
-  passwordUpdateForm = new FormGroup({
-    password: new FormControl('', Validators.required),
-    newPassword: new FormControl('', Validators.required),
-    confirmPassword: new FormControl('', Validators.required)
-  });
-
-  deleteAccntForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
-  });
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    this.api.getUserInfo().then(ret => {
-      this.user = ret;
-    });
     this.api.Bases.subscribe(bases => {
       this.bases = bases;
     });
@@ -84,20 +63,5 @@ export class DashboardComponent implements OnInit {
 
   showOrgList(): boolean {
     return !(_.isEmpty(this.selectedBase) || _.isEmpty(this.orgsByBase));
-  }
-
-  doLogout() {
-    this.api.logout();
-  }
-
-  doEmailUpdate() {
-    console.log(this.emailUpdateForm.value);
-  }
-
-  doPasswordUpdate() {
-    console.log(this.passwordUpdateForm.value);
-  }
-  doAccountDelete() {
-    console.log(this.deleteAccntForm.value);
   }
 }

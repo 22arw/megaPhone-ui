@@ -30,6 +30,7 @@ export class MessageStatComponent implements OnInit, OnChanges {
       this.api.getNumberOfSubscribers(this.org.id).then(res => {
         this.subscribers = res;
       });
+      this.message = '';
     }
   }
 

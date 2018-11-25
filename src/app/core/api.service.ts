@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as i from './interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,11 @@ export class ApiService {
   /**
    * Constructor
    */
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   /**
    * @param error Handles error responses from the server.
@@ -35,6 +40,7 @@ export class ApiService {
       console.error('An error occurred:', error.error.message);
     } else if (error.status === 401) {
       console.log('You are not authorized. Please log in.');
+      this.toastr.error('You are not authorized to perform that action.');
     } else {
       console.error(
         `API returned code ${error.status}, ` + `body was: ${error.error}`
@@ -52,13 +58,16 @@ export class ApiService {
   ) {
     localStorage.setItem('x-access-token', res.token);
 
-    if (!(<i.StandardResponse>res).success) {
+    if ((<i.StandardResponse>res).error) {
+      this.toastr.error((<i.StandardResponse>res).error);
+      console.log((<i.StandardResponse>res).error);
       // send feedback to user.
     } else if (successMessage) {
+      this.toastr.success(successMessage);
       console.log(successMessage);
       // handle success message
     } else {
-      console.log('Success!');
+      // console.log('Success!');
     }
   }
 
@@ -134,8 +143,8 @@ export class ApiService {
             'needsPasswordChange',
             `${res.needsPasswordChange}`
           );
-          localStorage.setItem('role', res.role.toString());
-          this.handleStandardResponse(res, 'hey');
+          localStorage.setItem('role', `${res.role}`);
+          this.handleStandardResponse(res, 'Welcome!');
           console.log('logged in!');
           this.router.navigate(['dashboard']);
         },
@@ -157,7 +166,6 @@ export class ApiService {
    * @description queries the api to get a list of bases available for the user. Updates the Bases observable datastore.
    */
   getBases() {
-    // const headers = new HttpHeaders({'x-access-token': localStorage.getItem('x-access-token')});
     this.http
       .get<i.GetAllBasesReturns>(this.API_BASE_URL + '/api/base/getAllBases')
       .toPromise()
@@ -196,6 +204,10 @@ export class ApiService {
       );
   }
 
+  /**
+   * @description returns the number of subscribers for the given orgId.
+   * @param orgId The orgId for the organization to get the number of subscribers for.
+   */
   getNumberOfSubscribers(orgId: number): Promise<number> {
     return this.http
       .post<i.GetNumberOfSubscribersReturns>(
@@ -234,14 +246,23 @@ export class ApiService {
       );
   }
 
+  /**
+   * @description returns the logged in user's data.
+   */
   getUserInfo(): Promise<i.UserData> {
-    return this.http.get<i.GetUserDataReturns>(this.API_BASE_URL + '/api/user').toPromise().then(res => {
-      this.handleStandardResponse(res);
-      return res.user;
-    }, err => {
-      this.handleError(err);
-      return err;
-    });
+    return this.http
+      .get<i.GetUserDataReturns>(this.API_BASE_URL + '/api/user')
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          return res.user;
+        },
+        err => {
+          this.handleError(err);
+          return err;
+        }
+      );
   }
 
   /**
@@ -259,6 +280,31 @@ export class ApiService {
       .then(
         res => {
           this.handleStandardResponse(res, 'Message sent successfully!');
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  resetPassword(
+    oldPassword: string,
+    password: string,
+    confirmPassword: string
+  ): void {
+    this.http
+      .post<i.StandardResponse>(this.API_BASE_URL + '/api/auth/resetPassword', {
+        oldPassword,
+        password,
+        confirmPassword
+      })
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Password Reset Successfully.');
+          if (res.success.toString() === 'true') {
+            localStorage.setItem('needsPasswordChange', 'false');
+          }
         },
         err => {
           this.handleError(err);

@@ -24,6 +24,7 @@ export class MessageComponent implements OnInit, OnChanges {
 
   message = '';
   placeholder = '';
+  subscribers = 0;
 
   ngOnInit() {
     this.setPlaceholderText();
@@ -36,6 +37,9 @@ export class MessageComponent implements OnInit, OnChanges {
     }
     if (changes.org) {
       this.message = '';
+      this.api.getNumberOfSubscribers(this.org.id).then(res => {
+        this.subscribers = res;
+      });
     }
   }
 
@@ -71,6 +75,6 @@ export class MessageComponent implements OnInit, OnChanges {
   }
 
   isDisabled(): boolean {
-    return !this.org || this.message.length === 0;
+    return !this.org || this.message.length === 0 || this.subscribers === 0;
   }
 }
