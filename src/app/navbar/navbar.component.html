@@ -16,7 +16,7 @@
 
 <header class="header-6">
   <div class="branding">
-    <a href="..." class="nav-link">
+    <a routerLink="/dashboard" class="nav-link">
       <img src="../../assets/images/MegaPhoneLogo.svg" style="max-width:2.2rem; margin-right:20px;">
       <span class="title">Megaphone</span>
     </a>
@@ -91,11 +91,12 @@
     <form clrForm [formGroup]="deleteAccntForm" clrLayout="horizontal" (ngSubmit)="doAccountDelete()">
 
       <div class="form-section">
+        <p style="color: red; font-weight: bold; text-align: center;">I want to delete my account.</p>
         <clr-input-container>
-          <label class="clr-col-xs-12 clr-col-md-4">Email</label>
-          <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" formControlName="email" />
-          <clr-control-helper>Type your email to confirm</clr-control-helper>
-          <clr-control-error>Must be a valid email.</clr-control-error>
+          <label class="clr-col-xs-12 clr-col-md-4">Delete Account Phrase</label>
+          <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" formControlName="deleteConfirm" />
+          <clr-control-helper>Type in the phrase above exactly.</clr-control-helper>
+          <clr-control-error>Must match the phrase above.</clr-control-error>
         </clr-input-container>
   
         <div style="margin-top:1rem;">

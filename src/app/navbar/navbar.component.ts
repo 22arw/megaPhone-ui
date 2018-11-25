@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../core/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as i from '../core/interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -24,10 +25,10 @@ export class NavbarComponent implements OnInit {
   });
 
   deleteAccntForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
+    deleteConfirm: new FormControl('', [Validators.required])
   });
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.api.getUserInfo().then(ret => {
@@ -40,18 +41,22 @@ export class NavbarComponent implements OnInit {
   }
 
   doEmailUpdate() {
-    console.log(this.emailUpdateForm.value);
+    this.api.updateUserEmail(this.emailUpdateForm.value.email);
   }
 
   doPasswordUpdate() {
-    console.log(this.passwordUpdateForm.value);
     const oldPassword = this.passwordUpdateForm.value.password as string;
     const password = this.passwordUpdateForm.value.newPassword as string;
-    const confirmPassword = this.passwordUpdateForm.value.confirmPassword as string;
+    const confirmPassword = this.passwordUpdateForm.value
+      .confirmPassword as string;
     this.api.resetPassword(oldPassword, password, confirmPassword);
   }
   doAccountDelete() {
-    console.log(this.deleteAccntForm.value);
+    if (this.deleteAccntForm.value.deleteConfirm !== 'I want to delete my account.') {
+      this.toastr.error('You must type the phrase in exactly.');
+    }
+    this.toastr.info('Deleting your account.');
+    this.api.updateUserIsActive(false);
   }
 
   needsPasswordChange(): boolean {

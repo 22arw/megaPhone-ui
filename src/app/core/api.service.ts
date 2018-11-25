@@ -287,6 +287,12 @@ export class ApiService {
       );
   }
 
+  /**
+   * @description Resets the logged in user's password.
+   * @param oldPassword this is the curren password
+   * @param password this is the new password
+   * @param confirmPassword this should match the new password
+   */
   resetPassword(
     oldPassword: string,
     password: string,
@@ -310,5 +316,43 @@ export class ApiService {
           this.handleError(err);
         }
       );
+  }
+
+  /**
+   * @description Updates the user's email address to the email supplied.
+   * @param email The new email to be updated to.
+   */
+  updateUserEmail(email: string): void {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/user/updateUserEmail',
+        { email }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Email updated successfully.');
+          location.reload();
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  updateUserIsActive(isActive: boolean, userId?: number): void {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/user/updateIsActive',
+        { isActive, userId }
+      )
+      .toPromise()
+      .then(res => {
+        this.handleStandardResponse(res, 'Update successful.');
+        this.logout();
+        location.reload();
+      }, err => {
+        this.handleError(err);
+      });
   }
 }
