@@ -9,6 +9,7 @@ import * as i from '../core/interfaces';
 import { ApiService } from '../core/api.service';
 import * as jwtDecode from 'jwt-decode';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-org-editor',
@@ -34,7 +35,11 @@ export class OrgEditorComponent implements OnInit, OnChanges {
     subscriptionCode: new FormControl('')
   });
 
-  constructor(private api: ApiService) {}
+  deleteOrgForm = new FormGroup({
+    deletePhrase: new FormControl('', Validators.required)
+  });
+
+  constructor(private api: ApiService, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.canEditOrg = this.setCanEditOrg();
@@ -70,14 +75,30 @@ export class OrgEditorComponent implements OnInit, OnChanges {
   }
 
   addOrgManager() {
-    console.log('addOrgManager(): ', this.addOrgManagerForm.value);
+    const email = this.addOrgManagerForm.value.email;
+    this.api.createOrgManager(email, this.org.id);
   }
 
   transferOrgOwner() {
-    console.log('transferOrgOwner', this.transferOwnerForm.value)
+    const email = this.transferOwnerForm.value.email;
+    this.api.updateOrgOwner(email, this.org.id);
   }
 
   updateOrg() {
-    console.log('updateOrg(): ', this.updateOrgForm.value);
+    const orgName = this.updateOrgForm.value.orgName || this.org.orgName;
+    const subscriptionCode = this.updateOrgForm.value.subscriptionCode || this.org.subscriptionCode;
+    if (this.org.orgName === orgName && this.org.subscriptionCode === subscriptionCode) {
+      this.toastr.error(`Please change the value to something different before submitting.`);
+    } else {
+      this.api.updateOrg(this.org.id, orgName, subscriptionCode);
+    }
+  }
+
+  deleteOrg() {
+    if (this.deleteOrgForm.value.deletePhrase === `Delete ${this.org.orgName}`) {
+      this.api.updateOrgIsActive(false, this.org.id);
+    } else {
+      this.toastr.error(`Deletion phrase didn't match.`);
+    }
   }
 }

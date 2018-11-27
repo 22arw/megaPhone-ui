@@ -7,6 +7,8 @@
         <div class="modal-body">
           <form clrForm [formGroup]="addOrgManagerForm" clrLayout="horizontal" (ngSubmit)="addOrgManager()">
             <div class='form-section'>
+
+              <p>Add another user for this Organization by submitting their email address. If this person doesn't have an account, an account will be generated and an email will be sent to them describing how to log in.</p>
     
               <clr-input-container>
                 <label class="clr-col-xs-12 clr-col-md-4">Email</label>
@@ -25,15 +27,18 @@
           <form clrForm [formGroup]="updateOrgForm" clrLayout="horizontal" (ngSubmit)="updateOrg()">
       
             <div class='form-section'>
+
+              <p>Update either the organization name or the subscription code, or both. You can change one while leaving the other blank.</p>
+
               <clr-input-container>
                 <label class="clr-col-xs-12 clr-col-md-4">Organization Name</label>
-                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="Organization Name" formControlName="orgName" />
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="{{org.orgName}}" formControlName="orgName" />
                 <clr-control-helper>Change the organization name.</clr-control-helper>
               </clr-input-container>
         
               <clr-input-container>
                 <label class="clr-col-xs-12 clr-col-md-4">Subscription Code</label>
-                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="Subscription Code" formControlName="subscriptionCode" />
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="{{org.subscriptionCode | uppercase}}" formControlName="subscriptionCode" />
                 <clr-control-helper>Change the subscription code people use to subscribe</clr-control-helper>
               </clr-input-container>
         
@@ -45,6 +50,8 @@
           </form>
           <form clrForm [formGroup]="transferOwnerForm" clrLayout="horizontal" (ngSubmit)="transferOrgOwner()">
             <div class='form-section'>
+
+                <p>Transfer ownership to another user for this Organization by submitting their email address. If this person doesn't have an account, an account will be generated and an email will be sent to them describing how to log in.</p>
     
               <clr-input-container>
                 <label class="clr-col-xs-12 clr-col-md-4">Email</label>
@@ -54,7 +61,26 @@
               </clr-input-container>
         
               <div style="margin-top:1rem;">
-                <button class="btn btn-primary"[disabled]="!addOrgManagerForm.valid">Transfer Ownership</button>
+                <button class="btn btn-primary"[disabled]="!transferOwnerForm.valid">Transfer Ownership</button>
+              </div>
+    
+            </div>
+          </form>
+
+
+          <form clrForm [formGroup]="deleteOrgForm" clrLayout="horizontal" (ngSubmit)="deleteOrg()">
+            <div class='form-section'>
+              <p>WARNING: This action is irreversible.</p>
+              <p style="text-align: center; color: red; font-weight: bold;">Delete {{org.orgName}}</p>
+              <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Deletion Phrase</label>
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="deletePhrase" placeholder="Deletion Phrase" formControlName="deletePhrase" />
+                <clr-control-helper>Enter deletion phrase above</clr-control-helper>
+                <clr-control-error>Must copy text exactly as written above.</clr-control-error>
+              </clr-input-container>
+        
+              <div style="margin-top:1rem;">
+                <button class="btn btn-warning"[disabled]="!deleteOrgForm.valid">DELETE</button>
               </div>
     
             </div>

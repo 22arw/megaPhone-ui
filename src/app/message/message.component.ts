@@ -46,20 +46,20 @@ export class MessageComponent implements OnInit, OnChanges {
   setPlaceholderText() {
     const placeholders = [
       'Craft your message here.',
-      // tslint:disable-next-line:quotemark
-      "You've got something awesome to say, don't you. Do it here. 😎",
+      `When you've got something awesome to say, do it here. 😎`,
       'Let everyone know their impact. 🙌',
       'It is always a good idea to share good news. 👍',
-      'What a week! 💪',
-      // tslint:disable-next-line:quotemark
-      "Catch me later, I'll buy you a beer. 🍻",
-      // tslint:disable-next-line:quotemark
-      "If the pilot's good, see, I mean if he's reeeally sharp, he'll send a message right here ✈",
-      // tslint:disable-next-line:quotemark
-      "I shouldn't tell you this, Mandrake, but you're a good officer and you've a right to know. It looks like we're in a shooting war.",
-      // tslint:disable-next-line:max-line-length quotemark
-      "Okay, I'm going to get your money for you, but if you don't get the president of the United States on that phone, you know what's going to happen to you? What!? You're gonna have to answer to the Coca-Cola company. ☢",
-      'Who is John Galt?'
+      `Catch me later, I'll buy you a beer. 🍻`,
+      `If the pilot's good, see, I mean if he's reeeally sharp, he'll send a message right here ✈`,
+      `I shouldn't tell you this, Mandrake, but you're a good officer and you've a right to know. It looks like we're in a shooting war.`,
+      // tslint:disable-next-line:max-line-length
+      `Okay, I'm going to get your money for you, but if you don't get the President of the United States on that phone, you know what's going to happen to you?
+      What!?
+      You're gonna have to answer to the Coca-Cola company. ☢`,
+      'Who is John Galt?',
+      `Toto, I've got a feeling we're not in Kansas anymore.`,
+      `Surely you can't be serious.
+      I am serious…and don't call me Shirley.`
     ];
 
     this.placeholder =
@@ -73,6 +73,8 @@ export class MessageComponent implements OnInit, OnChanges {
 
   sendMessage() {
     this.api.sendMessage(Number(this.org.id), this.message.toString());
+    this.message = '';
+    this.messageOutput.emit('');
   }
 
   isDisabled(): boolean {
