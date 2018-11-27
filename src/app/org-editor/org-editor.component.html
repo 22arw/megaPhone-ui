@@ -1,0 +1,70 @@
+<button *ngIf="canEditOrg" (click)="editOrgModal = true" class="btn btn-primary btn-block"><clr-icon shape="cog"></clr-icon> Edit This Organization</button>
+
+<div>
+    <clr-modal [(clrModalOpen)]="editOrgModal" [clrModalStaticBackdrop]="true">
+        <h3 class="modal-title">Manage the Organization</h3>
+    
+        <div class="modal-body">
+          <form clrForm [formGroup]="addOrgManagerForm" clrLayout="horizontal" (ngSubmit)="addOrgManager()">
+            <div class='form-section'>
+    
+              <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Email</label>
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="email" placeholder="New Org User Email" formControlName="email" />
+                <clr-control-helper>Enter the new person's email address.</clr-control-helper>
+                <clr-control-error>Must be a valid email.</clr-control-error>
+              </clr-input-container>
+        
+              <div style="margin-top:1rem;">
+                <button class="btn btn-primary"[disabled]="!addOrgManagerForm.valid">Add Organization User</button>
+              </div>
+    
+            </div>
+          </form>
+
+          <form clrForm [formGroup]="updateOrgForm" clrLayout="horizontal" (ngSubmit)="updateOrg()">
+      
+            <div class='form-section'>
+              <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Organization Name</label>
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="Organization Name" formControlName="orgName" />
+                <clr-control-helper>Change the organization name.</clr-control-helper>
+              </clr-input-container>
+        
+              <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Subscription Code</label>
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="text" placeholder="Subscription Code" formControlName="subscriptionCode" />
+                <clr-control-helper>Change the subscription code people use to subscribe</clr-control-helper>
+              </clr-input-container>
+        
+              <div style="margin-top:1rem;">
+                <button class="btn btn-primary">Update Organization</button>
+              </div>
+            </div>
+      
+          </form>
+          <form clrForm [formGroup]="transferOwnerForm" clrLayout="horizontal" (ngSubmit)="transferOrgOwner()">
+            <div class='form-section'>
+    
+              <clr-input-container>
+                <label class="clr-col-xs-12 clr-col-md-4">Email</label>
+                <input class="clr-col-xs-12 clr-col-md-4" clrInput type="email" placeholder="New Org Owner Email" formControlName="email" />
+                <clr-control-helper>Enter the new org owner's email address.</clr-control-helper>
+                <clr-control-error>Must be a valid email.</clr-control-error>
+              </clr-input-container>
+        
+              <div style="margin-top:1rem;">
+                <button class="btn btn-primary"[disabled]="!addOrgManagerForm.valid">Transfer Ownership</button>
+              </div>
+    
+            </div>
+          </form>
+
+        </div>
+    
+    
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="editOrgModal = false">Close</button>
+        </div>
+      </clr-modal>
+</div>

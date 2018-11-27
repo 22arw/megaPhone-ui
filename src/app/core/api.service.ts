@@ -340,6 +340,30 @@ export class ApiService {
       );
   }
 
+  isBaseManager(baseId: number): Promise<boolean> {
+    return this.http
+      .post<i.IsBaseManagerReturns>(
+        this.API_BASE_URL + '/api/base/isBaseManager',
+        { baseId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          return res.isBaseManager.toString() === 'true';
+        },
+        err => {
+          this.handleError(err);
+          return false;
+        }
+      );
+  }
+
+  /**
+   * @description WARNING!!! This function will perform irreversible actions to the user and all of their roles.
+   * @param isActive This value determines if the user is deactivated or reactivated. To deactivate, set to false.
+   * @param userId Optional value. If left blank, the api will assume it's the currently logged in user.
+   */
   updateUserIsActive(isActive: boolean, userId?: number): void {
     this.http
       .post<i.StandardResponse>(
@@ -347,12 +371,15 @@ export class ApiService {
         { isActive, userId }
       )
       .toPromise()
-      .then(res => {
-        this.handleStandardResponse(res, 'Update successful.');
-        this.logout();
-        location.reload();
-      }, err => {
-        this.handleError(err);
-      });
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Update successful.');
+          this.logout();
+          location.reload();
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
   }
 }

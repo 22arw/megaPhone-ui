@@ -58,7 +58,8 @@ export class MessageComponent implements OnInit, OnChanges {
       // tslint:disable-next-line:quotemark
       "I shouldn't tell you this, Mandrake, but you're a good officer and you've a right to know. It looks like we're in a shooting war.",
       // tslint:disable-next-line:max-line-length quotemark
-      "Okay, I'm going to get your money for you, but if you don't get the president of the United States on that phone, you know what's going to happen to you? What!? You're gonna have to answer to the Coca-Cola company. ☢"
+      "Okay, I'm going to get your money for you, but if you don't get the president of the United States on that phone, you know what's going to happen to you? What!? You're gonna have to answer to the Coca-Cola company. ☢",
+      'Who is John Galt?'
     ];
 
     this.placeholder =
