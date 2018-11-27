@@ -21,6 +21,7 @@
       </div>
       <div class="clr-col-md-4" *ngIf="selectedOrg && showOrgList()">
         <app-message-stat [base]="selectedBase" [org]="selectedOrg" [message]="message"></app-message-stat>
+        <app-org-editor [org]="selectedOrg"></app-org-editor>
       </div>
     </div>
   </div>

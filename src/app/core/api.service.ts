@@ -108,6 +108,28 @@ export class ApiService {
   }
 
   /**
+   * @description Adds an org manager to the given orgId.
+   * @param newOrgManagerEmail Email address of the new org manager.
+   * @param orgId orgId of the org the user will be managing.
+   */
+  createOrgManager(newOrgManagerEmail: string, orgId: number): void {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/organization/createOrgManager',
+        { newOrgManagerEmail, orgId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Org user created successfully.');
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  /**
    * @description checks if an email is unique, returns false if the email is already in use OR it is not a valid email.
    * To check only for valid email, see validators.service.ts for isEmailValid();
    * @param email The email address being checked.
@@ -340,6 +362,90 @@ export class ApiService {
       );
   }
 
+  updateOrgOwner(newOrgOwnerEmail: string, orgId: number): void {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/organization/updateOrgOwner',
+        { newOrgOwnerEmail, orgId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(
+            res,
+            'Transferred ownership successfully.'
+          );
+          location.reload(); // reloads the current page.
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  isBaseManager(baseId: number): Promise<boolean> {
+    return this.http
+      .post<i.IsBaseManagerReturns>(
+        this.API_BASE_URL + '/api/base/isBaseManager',
+        { baseId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res);
+          return res.isBaseManager.toString() === 'true';
+        },
+        err => {
+          this.handleError(err);
+          return false;
+        }
+      );
+  }
+
+  updateOrg(orgId: number, orgName: string, subscriptionCode: string): void {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/organization/updateOrg',
+        { orgId, orgName, subscriptionCode }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(
+            res,
+            'Organization updated successfully.'
+          );
+          location.reload();
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  updateOrgIsActive(isActive: boolean, orgId: number) {
+    this.http
+      .post<i.StandardResponse>(
+        this.API_BASE_URL + '/api/organization/updateIsActive',
+        { isActive, orgId }
+      )
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Organization update complete.');
+          location.reload();
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
+  /**
+   * @description WARNING!!! This function will perform irreversible actions to the user and all of their roles.
+   * @param isActive This value determines if the user is deactivated or reactivated. To deactivate, set to false.
+   * @param userId Optional value. If left blank, the api will assume it's the currently logged in user.
+   */
   updateUserIsActive(isActive: boolean, userId?: number): void {
     this.http
       .post<i.StandardResponse>(
@@ -347,12 +453,15 @@ export class ApiService {
         { isActive, userId }
       )
       .toPromise()
-      .then(res => {
-        this.handleStandardResponse(res, 'Update successful.');
-        this.logout();
-        location.reload();
-      }, err => {
-        this.handleError(err);
-      });
+      .then(
+        res => {
+          this.handleStandardResponse(res, 'Update successful.');
+          this.logout();
+          location.reload();
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
   }
 }

@@ -30,6 +30,10 @@ export interface GetOrgsReturns extends StandardResponse {
   orgs: Organization[];
 }
 
+export interface IsBaseManagerReturns extends StandardResponse {
+  isBaseManager: boolean;
+}
+
 export interface IsEmailUniqueReturns extends StandardResponse {
   isEmailUnique: boolean;
 }

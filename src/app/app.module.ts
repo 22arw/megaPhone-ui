@@ -20,6 +20,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { OrgEditorComponent } from './org-editor/org-editor.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ToastrModule } from 'ngx-toastr';
     MessageListComponent,
     MessageStatComponent,
     ProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    OrgEditorComponent
   ],
   imports: [
     BrowserModule,
