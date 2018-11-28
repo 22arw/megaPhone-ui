@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   user: i.UserData;
 
   preferencesModal = false;
+  submitIssueModal = false;
 
   emailUpdateForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
@@ -26,6 +27,11 @@ export class NavbarComponent implements OnInit {
 
   deleteAccntForm = new FormGroup({
     deleteConfirm: new FormControl('', [Validators.required])
+  });
+
+  submitIssueForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    body: new FormControl('', Validators.required)
   });
 
   constructor(private api: ApiService, private toastr: ToastrService) {}
@@ -52,7 +58,10 @@ export class NavbarComponent implements OnInit {
     this.api.resetPassword(oldPassword, password, confirmPassword);
   }
   doAccountDelete() {
-    if (this.deleteAccntForm.value.deleteConfirm !== 'I want to delete my account.') {
+    if (
+      this.deleteAccntForm.value.deleteConfirm !==
+      'I want to delete my account.'
+    ) {
       this.toastr.error('You must type the phrase in exactly.');
     }
     this.toastr.info('Deleting your account.');
@@ -62,5 +71,13 @@ export class NavbarComponent implements OnInit {
   needsPasswordChange(): boolean {
     const needsPasswordChange = localStorage.getItem('needsPasswordChange');
     return needsPasswordChange === 'true';
+  }
+
+  submitIssue() {
+    const title = this.submitIssueForm.value.title;
+    const body = this.submitIssueForm.value.body;
+
+    this.api.postGithubIssue(title, body);
+    this.submitIssueModal = false; // auto-close the submit issue modal
   }
 }

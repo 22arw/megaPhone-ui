@@ -287,6 +287,26 @@ export class ApiService {
       );
   }
 
+  postGithubIssue(title: string, body: string): void {
+    this.http
+      .post<i.StandardResponse>(this.API_BASE_URL + '/api/github', {
+        title,
+        body
+      })
+      .toPromise()
+      .then(
+        res => {
+          this.handleStandardResponse(
+            res,
+            `Thank you, your feedback has been received.`
+          );
+        },
+        err => {
+          this.handleError(err);
+        }
+      );
+  }
+
   /**
    * @description Sends the message to subscribers of the organization.
    * @param orgId The orgId to send the message from

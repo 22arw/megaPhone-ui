@@ -1,3 +1,43 @@
+<clr-alerts>
+  <clr-alert *ngIf="needsPasswordChange()" [clrAlertType]="'warning'" [clrAlertAppLevel]="true">
+      <clr-alert-item>
+          <span class="alert-text">
+            Please update your password.
+          </span>
+          <div class="alert-actions">
+            <button (click)="preferencesModal = true" class="btn alert-action">Update Password</button>
+          </div>
+      </clr-alert-item>
+  </clr-alert>
+  <clr-alert [clrAlertType]="'info'" [clrAlertAppLevel]="true">
+      <clr-alert-item>
+          <span class="alert-text">
+              Thank you for Beta testing Megaphone!
+          </span>
+          <div class="alert-actions">
+              <button (click)="submitIssueModal = true" class="btn alert-action">Submit Feedback/Issue</button>
+          </div>
+      </clr-alert-item>
+  </clr-alert>
+</clr-alerts>
+
+
+<!-- <div class="alert alert-app-level alert-info" role="alert">
+  <div class="alert-items">
+    <div class="alert-item static">
+        <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="info-triangle"></clr-icon>
+        </div>
+        <div class="alert-text">
+          Please update your password.
+        </div>
+        <div class="alert-actions">
+          <button (click)="preferencesModal = true" class="btn alert-action">Update Password</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="needsPasswordChange()" class="alert alert-app-level alert-warning" role="alert">
     <div class="alert-items">
         <div class="alert-item static">
@@ -12,7 +52,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <header class="header-6">
   <div class="branding">
@@ -108,5 +148,35 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="preferencesModal = false">Close</button>
+  </div>
+</clr-modal>
+
+
+<!-- SUBMIT FEEDBACK MODAL -->
+
+<clr-modal [(clrModalOpen)]="submitIssueModal" [clrModalStaticBackdrop]="true">
+  <h3 class="modal-title">Submit Feedback/Issue</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="submitIssueForm" clrLayout="horizontal" (ngSubmit)="submitIssue()">
+      
+      <clr-input-container>
+        <label class="clr-col-xs-12 clr-col-md-12">Title</label>
+        <input placeholder="Brief overview..." size="50" maxlength="140" clrInput type="text" formControlName="title" />
+        <clr-control-helper>Think of this as the subject line of an email.</clr-control-helper>
+        <clr-control-error>This field cannot be empty.</clr-control-error>
+      </clr-input-container>
+
+      <clr-textarea-container>
+        <label class="clr-col-xs-12 clr-col-md-4">Full Description</label>
+        <textarea placeholder="Detailed description..." rows="8" cols="75" clrTextarea type="text" formControlName="body" required></textarea>
+        <clr-control-helper>Fill us in with as much detail as you can.</clr-control-helper>
+        <clr-control-error>This field cannot be empty.</clr-control-error>
+      </clr-textarea-container>
+
+      <div style="text-align: right;">
+        <button class="btn btn-primary" [disabled]="!submitIssueForm.valid">Submit Feedback/Issue</button>
+      </div>
+
+    </form>
   </div>
 </clr-modal>
